@@ -79,6 +79,8 @@ class CalculationsController < ApplicationController
   def descriptive_statistics
     @numbers = params[:list_of_numbers].gsub(',', '').split.map(&:to_f)
 
+    var = @numbers
+
     # ================================================================================
     # Your code goes below.
     # The numbers the user input are in the array @numbers.
@@ -94,22 +96,35 @@ class CalculationsController < ApplicationController
 
     @range = @numbers.max - @numbers.min
 
-    @median = @sorted_numbers[(@count/2)]
 
-    @sum = "Replace this string with your answer."
+    # if (@count%2)!=0
+    #   @median = @sorted_numbers[((@count-1)/2)]
+    # else
+    #   @median = ((@sorted_numbers[(@count-1)/2])+(@sorted_numbers[(@count+1)/2])/2)
+    # end
 
-    @mean = "Replace this string with your answer."
 
-    @variance = "Replace this string with your answer."
+    @sum = @numbers.sum
 
-    @standard_deviation = "Replace this string with your answer."
+    @mean = (@numbers.sum)/@count
 
-    @mode = "Replace this string with your answer."
 
-    # ================================================================================
-    # Your code goes above.
-    # ================================================================================
+    @workingnumbers = []
+    @numbers.each do |num|
+      diff = num - @mean
+      square = diff*diff
+      @workingnumbers.push(square)
+    end
+      @variance = (@workingnumbers.sum)/@count
 
-    render("descriptive_statistics.html.erb")
+      @standard_deviation = @variance**0.5
+
+      @mode = "Replace this string with your answer."
+
+      # ================================================================================
+      # Your code goes above.
+      # ================================================================================
+
+      render("descriptive_statistics.html.erb")
+    end
   end
-end
