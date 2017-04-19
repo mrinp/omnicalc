@@ -96,13 +96,11 @@ class CalculationsController < ApplicationController
 
     @range = @numbers.max - @numbers.min
 
-
-    # if (@count%2)!=0
-    #   @median = @sorted_numbers[((@count-1)/2)]
-    # else
-    #   @median = ((@sorted_numbers[(@count-1)/2])+(@sorted_numbers[(@count+1)/2])/2)
-    # end
-
+    if (@count%2)!=0
+      @median = @sorted_numbers[((@count-1)/2)]
+    else
+      @median = ((@sorted_numbers[(@count)/2])+(@sorted_numbers[(@count/2)-1])/2)
+    end
 
     @sum = @numbers.sum
 
@@ -115,11 +113,12 @@ class CalculationsController < ApplicationController
       square = diff*diff
       @workingnumbers.push(square)
     end
+    
       @variance = (@workingnumbers.sum)/@count
 
       @standard_deviation = @variance**0.5
 
-      @mode = "Replace this string with your answer."
+      @mode = ["heads","tails"].sample
 
       # ================================================================================
       # Your code goes above.
