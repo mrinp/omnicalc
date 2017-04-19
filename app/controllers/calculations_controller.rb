@@ -99,7 +99,7 @@ class CalculationsController < ApplicationController
     if (@count%2)!=0
       @median = @sorted_numbers[((@count-1)/2)]
     else
-      @median = ((@sorted_numbers[(@count)/2])+(@sorted_numbers[(@count/2)-1])/2)
+      @median = (((@sorted_numbers[@count/2])+(@sorted_numbers[(@count-2)/2]))/2)
     end
 
     @sum = @numbers.sum
@@ -113,12 +113,12 @@ class CalculationsController < ApplicationController
       square = diff*diff
       @workingnumbers.push(square)
     end
-    
+
       @variance = (@workingnumbers.sum)/@count
 
       @standard_deviation = @variance**0.5
 
-      @mode = ["heads","tails"].sample
+      @mode = @numbers.inject(Hash.new(0)) {|h,v| h[v] += 1; h}
 
       # ================================================================================
       # Your code goes above.
